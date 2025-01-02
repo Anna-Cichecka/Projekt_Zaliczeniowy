@@ -6,6 +6,11 @@ import org.openqa.selenium.WebElement;
 
 public class YourAddressesPage {
     private static WebDriver driver;
+    WebElement alertSuccess;
+    WebElement lastAddressArea;
+    WebElement lastAddress;
+    String lastAlias;
+    String id;
 
 
     public YourAddressesPage(WebDriver driver) {
@@ -13,32 +18,57 @@ public class YourAddressesPage {
 
     }
 
-    WebElement alertSuccess = driver.findElement(By.xpath("//article[@role='alert' and @data-alert='success']"));
-    WebElement plusCreateNewAddress = driver.findElement(By.xpath("//a[@data-link-action = 'add-address']"));
+    public void clickCreateNewAddress() {
+        WebElement plusCreateNewAddress = driver.findElement(By.xpath("//a[@data-link-action = 'add-address']"));
+        plusCreateNewAddress.click();
 
-    public void getAddressId(){
-    WebElement lastCurrentAddressDate = driver.findElements(By.className("address")).getLast();
-    String id = lastCurrentAddressDate.getAttribute("id");
-    // System.out.println(id);
+    }
 
-}
-    WebElement lastAddressArea = driver.findElement(By.xpath("//article[@id='\" + id + \"']"));
-    WebElement lastAddress = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/address"));
-    //System.out.println("lastAddress: " + lastAddress);
-    //String pobranyAdres = lastAddress.getText();
-    //System.out.println("pobrany adres: " + pobranyAdres);
-    // System.out.println(" ");
-    // System.out.println( expectedLoggedUser+"\n"+address+"\n"+city+"\n"+zip_postalCode+"\n"+country+"\n"+phone);
-    WebElement lastAlias = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/h4"));
-    //System.out.println("lastAlias: " + lastAlias);
+    public boolean alertSuccessIsDisplayed() {
 
-    WebElement deleteAddress = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/a[@data-link-action = 'delete-address']"));
+        alertSuccess = driver.findElement(By.xpath("//article[@role='alert' and @data-alert='success']"));
+        boolean a = alertSuccess.isDisplayed();
+        return a;
 
-    public void addressDelete(){
-     deleteAddress.click();
+    }
+
+   public String getAddressId() {
+       WebElement lastCurrentAddressDate = driver.findElements(By.className("address")).getLast();
+       id = lastCurrentAddressDate.getAttribute("id");
+        System.out.println(id);
+       return id;
+   }
+
+    public void findLastAddressArea() {
+
+        lastAddressArea = driver.findElement(By.xpath("//article[@id='\" + id + \"']"));
+    }
+
+    public void findLastAddress() {
+        lastAddress = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/address"));
+
+        //System.out.println("lastAddress: " + lastAddress);
+        //String pobranyAdres = lastAddress.getText();
+        //System.out.println("pobrany adres: " + pobranyAdres);
+        // System.out.println(" ");
+        // System.out.println( expectedLoggedUser+"\n"+address+"\n"+city+"\n"+zip_postalCode+"\n"+country+"\n"+phone);
+        //
+    }
+
+    public String getLastAlias() {
+
+
+        String lastAlias = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/h4")).getText();
+        //System.out.println("lastAlias: " + lastAlias);
+        return lastAlias;
+
     }
 
 
+    public void clickAddressDelete() {
+        WebElement deleteAddress = driver.findElement(By.xpath("//article[@id='\" + id + \"']/div/a[@data-link-action = 'delete-address']"));
+        deleteAddress.click();
+    }
 
 
 }

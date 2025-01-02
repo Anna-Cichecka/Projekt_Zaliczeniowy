@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -63,7 +64,7 @@ public class CreateNewAddressesSteps {
     @And("User go to create new addresses option")
     public void userGoToCreateNewAddressesOption() {
         yourAddressesPage = new YourAddressesPage(driver);
-        yourAddressesPage.plusCreateNewAddress.click();
+        yourAddressesPage.clickCreateNewAddress();
     }
 
 
@@ -89,11 +90,11 @@ public class CreateNewAddressesSteps {
     public void dataAliasAddressCityZip_postalCodeCountryPhoneInFormAreCorrect(String alias, String address, String city, String zip_postalCode, String country, String phone) {
 
 
-        Assert.assertTrue("Alert should be displayed", yourAddressesPage.alertSuccess.isDisplayed());
+        Assert.assertTrue("Alert should be displayed", yourAddressesPage.alertSuccessIsDisplayed());
         Assert.assertEquals("Address successfully added!", yourAddressesPage.alertSuccess.getText());
+yourAddressesPage.getAddressId();
 
-
-        Assert.assertEquals(alias, yourAddressesPage.lastAlias.getText());
+        Assert.assertEquals(alias, yourAddressesPage.getLastAlias());
         Assert.assertEquals(expectedLoggedUser + "\n" + address + "\n" + city + "\n" + zip_postalCode + "\n" + country + "\n" + phone, yourAddressesPage.lastAddress.getText());
 
 
@@ -102,7 +103,7 @@ public class CreateNewAddressesSteps {
     @When("User delete new address")
     public void userDeleteNewAddress() {
 
-        yourAddressesPage.deleteAddress.click();
+        yourAddressesPage.clickAddressDelete();
 
     }
 
